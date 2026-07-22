@@ -50,11 +50,13 @@ window.__setPortals({
   {
    "id": "reading",
    "name": "読書メモ",
-   "subtitle": "private・ローカル同期",
+   "subtitle": "private リポジトリ ／ 端末間で双方向同期",
    "accent": "#7c3aed",
-   "state": "planned",
-   "localBase": "../読書メモ/ポータル/",
-   "note": "公開しない方針のため Pages には出しません（改善計画 項目4・案A）",
+   "state": "local",
+   "repo": "reading-notes",
+   "localBase": "../読書メモ/ビューア/",
+   "schedule": "随時（会話から記録 → sync_reading.sh）",
+   "note": "GitHub Pages を使わない方針のため、閲覧はローカルのみです。",
    "links": [
     {
      "label": "開く",

@@ -153,15 +153,14 @@ function cardHtml(p) {
   h += '<div class="chead"><span class="cname">' + esc(p.name) + '</span>' + stateBadge(p) + '</div>';
   if (p.subtitle) h += '<p class="csub">' + esc(p.subtitle) + '</p>';
 
-  if (p.state === 'live') {
-    if (st) {
-      if (st.headline) h += '<p class="headline">' + esc(headlineOf(st)) + '</p>';
-      if (st.sub) h += '<p class="subline">' + esc(st.sub) + '</p>';
-      h += itemChips(st);
-      h += progressBar(st, accent);
-    } else {
-      h += '<p class="subline">状態を読み込めませんでした（リンクは使えます）</p>';
-    }
+  // 状態は読めたときだけ描きます（local ポータルもローカルで開けば状態が出ます）
+  if (st) {
+    if (st.headline) h += '<p class="headline">' + esc(headlineOf(st)) + '</p>';
+    if (st.sub) h += '<p class="subline">' + esc(st.sub) + '</p>';
+    h += itemChips(st);
+    h += progressBar(st, accent);
+  } else if (p.state === 'live') {
+    h += '<p class="subline">状態を読み込めませんでした（リンクは使えます）</p>';
   }
   if (p.note) h += '<p class="note">' + esc(p.note) + '</p>';
   if (p.state === 'local' && !IS_LOCAL) {
