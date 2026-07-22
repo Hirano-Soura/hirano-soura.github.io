@@ -119,7 +119,9 @@ function stateBadge(p) {
 function headlineOf(st) {
   if (!st || !st.headline) return '';
   if (!st.date) return st.headline;
-  return (st.date === todayStr() ? '今日: ' : '直近(' + st.date + '): ') + st.headline;
+  var t = todayStr();
+  var pre = st.date === t ? '今日: ' : (st.date < t ? '直近(' + st.date + '): ' : '次回(' + st.date + '): ');
+  return pre + st.headline;
 }
 
 function itemChips(st) {

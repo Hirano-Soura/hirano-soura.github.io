@@ -32,13 +32,13 @@ window.__setPortals({
   {
    "id": "toukei",
    "name": "統計検定",
-   "subtitle": "準1級  8月合格目標",
+   "subtitle": "2級→準1級 ／ 全50トピック 10/19 完了予定",
    "accent": "#0d9488",
    "state": "live",
    "repo": "toukei-drill",
    "webBase": "/toukei-drill/",
    "localBase": "../統計検定/ポータル/",
-   "schedule": "水・金・日 9時",
+   "schedule": "月・火・水・金（前夜21時に翌日分を生成）",
    "links": [
     {
      "label": "開く",
