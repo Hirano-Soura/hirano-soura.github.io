@@ -136,9 +136,23 @@ function itemChips(st) {
   return h + '</div>';
 }
 
+/** 進捗の消化数。
+    progress.dates（消化予定日の一覧）があれば「今日以前」を閲覧時に数える。
+    静的ファイルに焼いた done は publish からの経過で古くなるため、dates を優先する。 */
+function doneCountOf(st) {
+  var pg = st && st.progress;
+  if (!pg) return 0;
+  if (pg.dates && pg.dates.length) {
+    var t = todayStr(), n = 0;
+    pg.dates.forEach(function (d) { if (d && d <= t) n++; });
+    return n;
+  }
+  return pg.done || 0;
+}
+
 function progressBar(st, accent) {
   if (!st || !st.progress || !st.progress.total) return '';
-  var d = st.progress.done || 0, t = st.progress.total;
+  var d = doneCountOf(st), t = st.progress.total;
   var pct = Math.max(0, Math.min(100, Math.round(d / t * 100)));
   var h = '<div class="bar"><i style="width:' + pct + '%;background:' + esc(accent) + '"></i></div>';
   h += '<div class="prow"><span>' + d + ' / ' + t + '</span>'
