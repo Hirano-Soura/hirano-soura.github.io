@@ -114,6 +114,36 @@ function stateBadge(p) {
   return '<span class="badge">準備中</span>';
 }
 
+/** 【項目29】どの日の内容を見せるかを、閲覧時に決めます。
+
+    生成は前夜に翌日分を作るため、生成側で「今日」を決めるとその瞬間の日付で固定され、
+    日付が変わった後もずっと前日の内容が出続けます（項目18と同じ型の誤りでした）。
+    そこで各ポータルは日付ごとの中身を数日分 days に入れて渡し、選ぶのはここで行います。
+
+    選ぶ規則:
+      今日以前で最も新しい日。今日ちょうどのエントリがあれば当然それが選ばれ、
+      無ければ「直近(日付)」としていままでどおりの表示になる。
+      すべて未来なら最も早い日（まだ始まっていないポータル）。
+
+    days を持たない旧形式・日付に依存しないポータル（読書メモ）は、そのまま返します。
+    ここでもポータル固有の解釈はしません。日付を選ぶだけです。 */
+function viewOf(st) {
+  if (!st) return null;
+  if (!st.days) return st;
+  var keys = Object.keys(st.days).sort();
+  if (!keys.length) return st;
+  var t = todayStr(), pick = null;
+  // 今日以前で最も新しい日を採る。keys は昇順なので、条件を満たす最後のものが残る。
+  // 今日ちょうどのエントリがあれば、それがそのまま選ばれる（特別扱いは要らない）。
+  keys.forEach(function (d) { if (d <= t) pick = d; });
+  if (!pick) pick = keys[0];   // すべて未来＝まだ始まっていないポータル
+  var d = st.days[pick] || {};
+  return {
+    id: st.id, date: pick, updated: st.updated, next: st.next, progress: st.progress,
+    headline: d.headline, sub: d.sub, items: d.items
+  };
+}
+
 /** status.date が今日なら「今日:」、そうでなければ「直近(日付):」を前置します。
     ポータル固有の解釈はせず、日付文字列の一致だけで判定します。 */
 function headlineOf(st) {
@@ -161,7 +191,7 @@ function progressBar(st, accent) {
 }
 
 function cardHtml(p) {
-  var st = window.__STATUS[p.id];
+  var st = viewOf(window.__STATUS[p.id]);
   var accent = p.accent || '#6b7280';
   var h = '<div class="card" style="border-left-color:' + esc(accent) + '">';
   h += '<div class="chead"><span class="cname">' + esc(p.name) + '</span>' + stateBadge(p) + '</div>';
@@ -201,7 +231,7 @@ function cardHtml(p) {
 function todayLine(actives) {
   var t = todayStr(), parts = [];
   actives.forEach(function (p) {
-    var st = window.__STATUS[p.id];
+    var st = viewOf(window.__STATUS[p.id]);
     if (st && st.headline && st.date === t) parts.push(p.name + ' ' + st.headline);
   });
   if (!parts.length) return IS_LOCAL
