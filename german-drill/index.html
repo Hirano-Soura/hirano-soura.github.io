@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ドイツ語 基礎暗記ドリル</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#f7f3ea">
+<style>
+  :root{
+    --bg:#fafaf7; --bg2:#ffffff; --bg3:#eeeee8; --line:#d8d8d0;
+    --fg:#1d2126; --fg2:#4b5561; --fg3:#7a8592;
+    --ac:#a8820f; --acbg:#f4e9c4; --acfg:#6b5208;
+    --ok:#1f8a58; --ng:#c8443b; --onac:#ffffff; --mono:ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#121519; --bg2:#1a1e24; --bg3:#232931; --line:#333b45;
+      --fg:#e8ecf2; --fg2:#9aa5b4; --fg3:#6b7683;
+      --ac:#c9a227; --acbg:rgba(201,162,39,.18); --acfg:#e8c766;
+      --ok:#5fbf8a; --ng:#e0685f; --onac:#1a1509; color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121519; --bg2:#1a1e24; --bg3:#232931; --line:#333b45;
+    --fg:#e8ecf2; --fg2:#9aa5b4; --fg3:#6b7683;
+    --ac:#c9a227; --acbg:rgba(201,162,39,.18); --acfg:#e8c766;
+    --ok:#5fbf8a; --ng:#e0685f; --onac:#1a1509; color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+    font-size:15px;line-height:1.65;
+    padding:14px 16px calc(60px + env(safe-area-inset-bottom));
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:640px;margin:0 auto}
+  h1{font-size:19px;margin:4px 0 2px;color:var(--ac)}
+  .sub{color:var(--fg3);font-size:12px;margin:0 0 14px}
+  h2{font-size:14px;margin:0 0 8px;color:var(--ac);letter-spacing:.04em}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+  .hidden{display:none !important}
+  button{font-family:inherit;font-size:15px;cursor:pointer;color:var(--fg)}
+  .btn{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:11px 16px;min-height:44px}
+  .btn.primary{background:var(--ac);border-color:var(--ac);color:var(--onac);font-weight:600}
+  .btn.ok{border-color:var(--ok);color:var(--ok)}
+  .btn.ng{border-color:var(--ng);color:var(--ng)}
+  .btn.sm{min-height:34px;padding:6px 10px;font-size:13px}
+  .btn.block{width:100%}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+  .lbl{font-size:12px;color:var(--fg3);min-width:52px}
+  .chip{background:var(--bg3);border:1px solid var(--line);color:var(--fg2);border-radius:999px;padding:7px 14px;font-size:13px;min-height:36px}
+  .chip.on{background:var(--acbg);border-color:var(--ac);color:var(--acfg)}
+  .deck{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+  .deck b{display:block;font-size:15px}
+  .deck span{display:block;font-size:12px;color:var(--fg3)}
+  .deck em{font-style:normal;font-size:12px;color:var(--ng)}
+  .back{background:none;border:none;color:var(--fg3);padding:6px 0;font-size:13px;margin-bottom:6px}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0 10px}
+  th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+  th{background:var(--bg3);font-weight:600;font-size:12px;color:var(--fg2)}
+  td.de,.de{font-family:var(--mono);font-size:14px}
+  .ref p,.ref li{margin:4px 0;font-size:14px}
+  .ref ul{padding-left:20px;margin:6px 0}
+  .ref h3{font-size:13px;margin:12px 0 4px;color:var(--fg2)}
+  .prog{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-bottom:10px}
+  .prog>i{display:block;height:100%;background:var(--ac);width:0}
+  .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--fg3);margin-bottom:6px}
+  .plabel{font-size:12px;color:var(--fg3);margin-bottom:2px}
+  .prompt{font-size:26px;font-weight:600;line-height:1.35;margin:4px 0 14px;word-break:break-word}
+  .prompt.de{font-family:inherit}
+  input.ans{
+    width:100%;font-size:18px;padding:12px;border-radius:8px;border:1px solid var(--line);
+    background:var(--bg);color:var(--fg);font-family:var(--mono);
+  }
+  input.ans:focus{outline:2px solid var(--ac);outline-offset:0}
+  .keys{display:flex;gap:6px;margin:8px 0 10px}
+  .keys button{flex:1;min-height:40px;background:var(--bg3);border:1px solid var(--line);border-radius:8px;font-size:17px;font-family:var(--mono)}
+  .fb{border-radius:8px;padding:10px 12px;margin:10px 0;font-size:15px}
+  .fb.ok{background:rgba(31,138,88,.12);border:1px solid var(--ok)}
+  .fb.ng{background:rgba(200,68,59,.10);border:1px solid var(--ng)}
+  .fb .ans-show{font-family:var(--mono);font-size:18px;font-weight:600;word-break:break-word}
+  .fb .mine{font-size:13px;color:var(--fg2);margin-top:2px}
+  .big{font-size:34px;font-weight:700;color:var(--ac)}
+  .wr{font-size:13px;border-bottom:1px solid var(--line);padding:6px 0}
+  .wr:last-child{border:none}
+  .wr .d{font-family:var(--mono);color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="home">
+  <h1>ドイツ語 基礎暗記ドリル</h1>
+  <p class="sub">数字・冠詞・時刻・挨拶など、暗記が必要な基礎をテーマ別に復習します。<br>
+  <span class="de">a:</span>→ä、<span class="de">o:</span>→ö、<span class="de">u:</span>→ü と打てます(下のボタンでも入力可)。</p>
+  <div id="decklist"></div>
+</section>
+
+<section id="deck" class="hidden">
+  <button class="back" id="deckBack">&larr; テーマ一覧</button>
+  <h1 id="deckTitle"></h1>
+  <p class="sub" id="deckSub"></p>
+  <div class="card">
+    <h2>練習の設定</h2>
+    <div class="row" id="rowCount"><span class="lbl">出題数</span></div>
+    <div class="row hidden" id="rowDir"><span class="lbl">向き</span></div>
+    <div class="row"><span class="lbl">音声</span><button class="chip" id="autoSpeak">自動読み上げ:切</button></div>
+    <div class="row">
+      <button class="btn primary" id="startBtn">はじめる</button>
+      <button class="btn hidden" id="retryStored">前回まちがえた問題だけ</button>
+    </div>
+  </div>
+  <div class="card ref"><h2>要点・一覧</h2><div id="refBody"></div></div>
+</section>
+
+<section id="quiz" class="hidden">
+  <button class="back" id="quitBtn">&larr; やめる</button>
+  <div class="meta"><span id="qNo"></span><span id="qScore"></span></div>
+  <div class="prog"><i id="qProg"></i></div>
+  <div class="card">
+    <div class="plabel" id="qLabel"></div>
+    <div class="prompt" id="qPrompt"></div>
+    <div id="typeArea">
+      <input class="ans" id="ans" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done">
+      <div class="keys">
+        <button data-k="ä">ä</button><button data-k="ö">ö</button><button data-k="ü">ü</button><button data-k="ß">ß</button>
+      </div>
+      <button class="btn primary block" id="checkBtn">答え合わせ</button>
+    </div>
+    <div id="flipArea" class="hidden">
+      <button class="btn primary block" id="showBtn">答えを見る</button>
+    </div>
+    <div id="fb" class="fb hidden"></div>
+    <div id="selfArea" class="row hidden">
+      <button class="btn ok" id="selfOk" style="flex:1">わかった (1)</button>
+      <button class="btn ng" id="selfNg" style="flex:1">まちがい (2)</button>
+    </div>
+    <div class="row">
+      <button class="btn sm hidden" id="speakBtn">読み上げ</button>
+      <button class="btn primary hidden" id="nextBtn" style="flex:1">つぎへ (Enter)</button>
+    </div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <h1>結果</h1>
+  <div class="card">
+    <div class="big" id="rScore"></div>
+    <div class="sub" id="rSub"></div>
+    <div class="row">
+      <button class="btn primary" id="rWrong">まちがえた問題だけもう一度</button>
+      <button class="btn" id="rAgain">同じ設定でもう一度</button>
+      <button class="btn" id="rHome">テーマ一覧へ</button>
+    </div>
+  </div>
+  <div class="card"><h2>まちがえた問題</h2><div id="rList"></div></div>
+</section>
+
+</div>
+
+<script>
+'use strict';
+/* ================= 共通 ================= */
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const tbl=(h,rows)=>'<table><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+(i>0?' class="de"':'')+'>'+c+'</td>').join('')+'</tr>').join('')+'</table>';
+
+/* ================= 数詞 ================= */
+const ONES=['null','eins','zwei','drei','vier','fünf','sechs','sieben','acht','neun','zehn','elf','zwölf','dreizehn','vierzehn','fünfzehn','sechzehn','siebzehn','achtzehn','neunzehn'];
+const TENS=['','','zwanzig','dreißig','vierzig','fünfzig','sechzig','siebzig','achtzig','neunzig'];
+function numAll(n){
+  if(n<20) return [ONES[n]];
+  if(n<100){const u=n%10,t=Math.floor(n/10);return [u? (u===1?'ein':ONES[u])+'und'+TENS[t] : TENS[t]];}
+  if(n<1000){
+    const h=Math.floor(n/100),r=n%100,pre=h===1?['einhundert','hundert']:[ONES[h]+'hundert'];
+    const rest=r?numAll(r):[''];
+    return pre.flatMap(p=>rest.map(x=>p+x));
+  }
+  const t=Math.floor(n/1000),r=n%1000,pre=t===1?['eintausend','tausend']:numAll(t).map(x=>x+'tausend');
+  const rest=r?numAll(r):[''];
+  return pre.flatMap(p=>rest.map(x=>p+x));
+}
+const num=n=>numAll(n)[0];
+function yearAll(y){
+  if(y>=1100&&y<2000){const h=Math.floor(y/100),r=y%100;return [num(h)+'hundert'+(r?num(r):''),...numAll(y)];}
+  return numAll(y);
+}
+function ordAll(n){
+  const sp={1:'erste',3:'dritte',7:'siebte',8:'achte'};
+  if(sp[n]) return [sp[n]];
+  if(n<20) return [ONES[n]+'te'];
+  return numAll(n).map(x=>x+'ste');
+}
+const MONTHS=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const MONTHS_JA=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+/* ================= 時刻 ================= */
+const hUhr=h=>h===1?'ein':num(h);
+const hNach=h=>h===1?'eins':num(h);
+function timeOfficial(){
+  const h=rnd(0,23),m=Math.random()<.35?0:rnd(1,59);
+  const ans=hUhr(h)+' Uhr'+(m?' '+num(m):'');
+  return {p:pad(h)+':'+pad(m),pl:'公式(24時間制)で言う',a:[ans],show:ans,type:'de',dir:'w',es:1};
+}
+const pad=n=>String(n).padStart(2,'0');
+function timeInformal(){
+  const h=rnd(1,12),m=5*rnd(0,11),h2=h%12+1;
+  let a=[],show;
+  const N=hNach(h),N2=hNach(h2);
+  const off=hUhr(h)+' Uhr'+(m?' '+num(m):'');
+  switch(m){
+    case 0:  a=[hUhr(h)+' Uhr'];break;
+    case 5:  a=['fünf nach '+N];break;
+    case 10: a=['zehn nach '+N];break;
+    case 15: a=['Viertel nach '+N];break;
+    case 20: a=['zwanzig nach '+N,'zehn vor halb '+N2];break;
+    case 25: a=['fünf vor halb '+N2];break;
+    case 30: a=['halb '+N2];break;
+    case 35: a=['fünf nach halb '+N2];break;
+    case 40: a=['zwanzig vor '+N2,'zehn nach halb '+N2];break;
+    case 45: a=['Viertel vor '+N2];break;
+    case 50: a=['zehn vor '+N2];break;
+    case 55: a=['fünf vor '+N2];break;
+  }
+  if(m) a.push(off);
+  show=a[0]+(a.length>1?'  (他: '+a.slice(1).join(' / ')+')':'');
+  return {p:h+':'+pad(m),pl:'日常(12時間制)で言う',a,show,type:'de',dir:'w',es:1};
+}
+
+/* ================= データ ================= */
+const GREET=[
+  ['おはよう(おはようございます)','Guten Morgen'],
+  ['こんにちは','Guten Tag'],
+  ['こんばんは','Guten Abend'],
+  ['おやすみなさい','Gute Nacht'],
+  ['やあ(くだけた挨拶)','Hallo'],
+  ['さようなら','Auf Wiedersehen'],
+  ['じゃあね(くだけた別れ)','Tschüss'],
+  ['またあとで','Bis später'],
+  ['また明日','Bis morgen'],
+  ['また近いうちに','Bis bald'],
+  ['お元気ですか(敬称 Sie)','Wie geht es Ihnen',["Wie geht's Ihnen"]],
+  ['元気?(親称 du)','Wie geht es dir',["Wie geht's dir","Wie geht's"]],
+  ['元気です、ありがとう。あなたは?(Sie)','Danke, gut. Und Ihnen',['Danke, gut. Und Ihnen']],
+  ['元気だよ、ありがとう。君は?(du)','Danke, gut. Und dir'],
+  ['まあまあです','So lala'],
+  ['ありがとう','Danke'],
+  ['どうもありがとう','Vielen Dank'],
+  ['どういたしまして','Bitte schön',['Gern geschehen','Bitte','Bitte sehr']],
+  ['お願いします / どうぞ','Bitte'],
+  ['すみません(呼びかけ・軽い謝罪)','Entschuldigung',['Entschuldigen Sie']],
+  ['ごめんなさい','Es tut mir leid'],
+  ['はじめまして(会えてうれしい)','Freut mich',['Angenehm','Freut mich sehr']],
+  ['お名前は?(Sie)','Wie heißen Sie',['Wie ist Ihr Name']],
+  ['名前は?(du)','Wie heißt du'],
+  ['私の名前は〜です','Ich heiße',['Mein Name ist']],
+  ['ご出身はどちらですか(Sie)','Woher kommen Sie'],
+  ['私は日本出身です','Ich komme aus Japan'],
+  ['どこに住んでいますか(Sie)','Wo wohnen Sie'],
+  ['私は東京に住んでいます','Ich wohne in Tokyo'],
+  ['もう一度お願いします','Noch einmal, bitte',['Noch einmal bitte']],
+  ['何とおっしゃいましたか?','Wie bitte'],
+  ['わかりません','Ich verstehe nicht',['Ich verstehe das nicht']],
+  ['ドイツ語を話しますか(Sie)','Sprechen Sie Deutsch'],
+  ['少しドイツ語を話します','Ich spreche ein bisschen Deutsch',['Ich spreche etwas Deutsch']],
+  ['乾杯','Prost',['Zum Wohl']],
+  ['召し上がれ(いただきます)','Guten Appetit'],
+  ['楽しんでね','Viel Spaß'],
+  ['幸運を祈ります','Viel Glück'],
+  ['誕生日おめでとう','Alles Gute zum Geburtstag',['Herzlichen Glückwunsch zum Geburtstag']],
+  ['よい週末を','Schönes Wochenende',['Ein schönes Wochenende']],
+  ['お大事に(くしゃみをした人へ)','Gesundheit'],
+  ['ようこそ','Herzlich willkommen',['Willkommen']],
+];
+const DAYS=[['月曜日','Montag'],['火曜日','Dienstag'],['水曜日','Mittwoch'],['木曜日','Donnerstag'],['金曜日','Freitag'],['土曜日','Samstag',['Sonnabend']],['日曜日','Sonntag']];
+const SEASONS=[['春','Frühling',['der Frühling']],['夏','Sommer',['der Sommer']],['秋','Herbst',['der Herbst']],['冬','Winter',['der Winter']]];
+const DAYPARTS=[['朝','der Morgen',['Morgen']],['午前','der Vormittag',['Vormittag']],['昼(正午)','der Mittag',['Mittag']],['午後','der Nachmittag',['Nachmittag']],['夕方・晩','der Abend',['Abend']],['夜','die Nacht',['Nacht']]];
+const TIMEWORDS=[
+  ['今日','heute'],['明日','morgen'],['昨日','gestern'],['あさって','übermorgen'],['おととい','vorgestern'],['今','jetzt'],
+  ['今朝','heute Morgen'],['今夜','heute Abend'],['毎日','jeden Tag'],['毎朝','jeden Morgen'],['今週','diese Woche'],['来週','nächste Woche'],['先週','letzte Woche'],['週末','das Wochenende',['Wochenende']],
+  ['月曜日に','am Montag'],['1月に','im Januar'],['夏に','im Sommer'],['朝に','am Morgen'],['夜に','in der Nacht'],['週末に','am Wochenende'],['8時に','um acht Uhr'],
+  ['今何時ですか','Wie spät ist es',['Wie viel Uhr ist es']],['何時に?','Um wie viel Uhr'],['今日は何曜日ですか','Welcher Tag ist heute'],['今日は何日ですか','Der Wievielte ist heute',['Den Wievielten haben wir heute']],
+];
+const WH=[
+  ['誰が','wer'],['誰を','wen'],['誰に','wem'],['誰の','wessen'],['何','was'],['どこ(場所)','wo'],['どこから','woher'],['どこへ','wohin'],
+  ['いつ','wann'],['なぜ','warum',['wieso','weshalb']],['どのように / どう','wie'],['どのくらい(量・値段)','wie viel'],['どのくらい(多数)','wie viele'],
+  ['どのくらいの間','wie lange'],['どのくらいの頻度で','wie oft'],['何歳','wie alt'],['どの〜','welcher'],['どんな種類の〜','was für ein'],['何時に','um wie viel Uhr'],['どれ(何の中から)','welches'],
+];
+const NOUNS=[
+  ['der','Mann','男(男性)','Männer'],['der','Vater','父','Väter'],['der','Bruder','兄弟','Brüder'],['der','Tisch','机','Tische'],['der','Stuhl','いす','Stühle'],
+  ['der','Hund','犬','Hunde'],['der','Apfel','りんご','Äpfel'],['der','Tag','日','Tage'],['der','Freund','友人(男)','Freunde'],['der','Lehrer','教師(男)','Lehrer'],
+  ['der','Kaffee','コーヒー','Kaffees'],['der','Zug','列車','Züge'],['der','Bahnhof','駅','Bahnhöfe'],['der','Käse','チーズ','Käse'],['der','Sohn','息子','Söhne'],
+  ['die','Frau','女性・妻','Frauen'],['die','Mutter','母','Mütter'],['die','Schwester','姉妹','Schwestern'],['die','Tür','ドア','Türen'],['die','Katze','猫','Katzen'],
+  ['die','Uhr','時計・時','Uhren'],['die','Tasche','かばん','Taschen'],['die','Woche','週','Wochen'],['die','Stadt','都市','Städte'],['die','Schule','学校','Schulen'],
+  ['die','Zeit','時間','Zeiten'],['die','Milch','牛乳','(なし)'],['die','Lampe','ランプ','Lampen'],['die','Blume','花','Blumen'],['die','Tochter','娘','Töchter'],
+  ['das','Kind','子ども','Kinder'],['das','Buch','本','Bücher'],['das','Haus','家','Häuser'],['das','Auto','車','Autos'],['das','Wasser','水','(なし)'],
+  ['das','Fenster','窓','Fenster'],['das','Mädchen','少女','Mädchen'],['das','Brot','パン','Brote'],['das','Bier','ビール','Biere'],['das','Zimmer','部屋','Zimmer'],
+  ['das','Jahr','年','Jahre'],['das','Geld','お金','(なし)'],['das','Bett','ベッド','Betten'],['das','Fahrrad','自転車','Fahrräder'],['das','Land','国・土地','Länder'],
+];
+/* 並びは 1格・4格・3格・2格 の順 */
+const ART={
+  '定冠詞':{m:['der','den','dem','des'],f:['die','die','der','der'],n:['das','das','dem','des'],p:['die','die','den','der']},
+  '不定冠詞 ein':{m:['ein','einen','einem','eines'],f:['eine','eine','einer','einer'],n:['ein','ein','einem','eines'],p:null},
+  '否定冠詞 kein / 所有冠詞 mein':{m:['kein','keinen','keinem','keines'],f:['keine','keine','keiner','keiner'],n:['kein','kein','keinem','keines'],p:['keine','keine','keinen','keiner']},
+  'dieser 型(dieser / jeder / welcher)':{m:['dieser','diesen','diesem','dieses'],f:['diese','diese','dieser','dieser'],n:['dieses','dieses','diesem','dieses'],p:['diese','diese','diesen','dieser']},
+};
+const PERS=[
+  ['ich','ich','mich','mir','mein'],['du','du','dich','dir','dein'],['er(彼)','er','ihn','ihm','sein'],['sie(彼女)','sie','sie','ihr','ihr'],['es(それ)','es','es','ihm','sein'],
+  ['wir','wir','uns','uns','unser'],['ihr(君たち)','ihr','euch','euch','euer'],['sie(彼ら)','sie','sie','ihnen','ihr'],['Sie(あなた)','Sie','Sie','Ihnen','Ihr'],
+];
+const PRON=['ich','du','er / sie / es','wir','ihr','sie(彼ら)','Sie'];
+const VERBS={
+  sein:['bin','bist','ist','sind','seid','sind','sind'],
+  haben:['habe','hast','hat','haben','habt','haben','haben'],
+  werden:['werde','wirst','wird','werden','werdet','werden','werden'],
+  wissen:['weiß','weißt','weiß','wissen','wisst','wissen','wissen'],
+  können:['kann','kannst','kann','können','könnt','können','können'],
+  müssen:['muss','musst','muss','müssen','müsst','müssen','müssen'],
+  wollen:['will','willst','will','wollen','wollt','wollen','wollen'],
+  dürfen:['darf','darfst','darf','dürfen','dürft','dürfen','dürfen'],
+  sollen:['soll','sollst','soll','sollen','sollt','sollen','sollen'],
+  mögen:['mag','magst','mag','mögen','mögt','mögen','mögen'],
+};
+const VJA={sein:'〜である',haben:'持つ',werden:'〜になる',wissen:'知っている',können:'できる',müssen:'〜ねばならない',wollen:'〜したい',dürfen:'〜してよい',sollen:'〜すべき',mögen:'好む'};
+
+/* ================= カード生成ヘルパ ================= */
+function pairCards(pairs){
+  const out=[];
+  for(const [ja,de,alt] of pairs){
+    out.push({p:ja,pl:'日本語 → ドイツ語',a:[de,...(alt||[])],show:de,type:'de',dir:'w'});
+    out.push({p:de,pl:'ドイツ語 → 意味',show:ja,type:'ja',dir:'r'});
+  }
+  return out;
+}
+function pairRef(pairs,h1,h2){return tbl([h1,h2],pairs.map(x=>[esc(x[0]),esc(x[1])]));}
+const artCards=()=>{
+  const out=[];
+  for(const [name,g] of Object.entries(ART)){
+    [['m','男性'],['f','女性'],['n','中性'],['p','複数']].forEach(([k,jn])=>{
+      if(!g[k]) return;
+      [[0,'1格'],[1,'4格'],[2,'3格'],[3,'2格']].forEach(([i,cn])=>{
+        out.push({p:name+'\n'+jn+' ・ '+cn,pl:'語尾つきの形を書く',a:[g[k][i]],show:g[k][i],type:'de',dir:'w'});
+      });
+    });
+  }
+  return out;
+};
+
+/* ================= テーマ定義 ================= */
+const DECKS=[
+{
+  id:'num1',title:'数字 0〜20',sub:'基数。11〜19 の綴りと 16・17 の変則を固める',
+  gen(){const o=[];for(let n=0;n<=20;n++){
+    o.push({p:String(n),pl:'ドイツ語で書く',a:[num(n)],show:num(n),type:'ns',dir:'w'});
+    o.push({p:num(n),pl:'数字で答える',a:[String(n)],show:String(n),type:'num',dir:'r',say:1});
+  }return o;},
+  ref(){
+    const r=[];for(let i=0;i<=10;i++){const b=i+10;r.push([String(i),ONES[i],String(b),b<20?ONES[b]:'zwanzig']);}
+    return tbl(['数','語','数','語'],r)+
+    '<ul><li>1 は単独では <b>eins</b>、語の前では <b>ein</b>(ein Uhr / einundzwanzig)</li>'+
+    '<li><b>sechs → sechzehn</b>(s が落ちる)、<b>sieben → siebzehn</b>(en が落ちる)</li>'+
+    '<li>12 は <b>zwölf</b>、11 は <b>elf</b>(-zehn 型ではない)</li>'+
+    '<li>数詞は 1 語でつなげて書く</li></ul>';
+  }
+},
+{
+  id:'num2',title:'数字 20〜100',sub:'十の位と「一の位 + und + 十の位」の組み立て',
+  gen(){const o=[];for(let n=20;n<=100;n++){
+    o.push({p:String(n),pl:'ドイツ語で書く',a:numAll(n),show:num(n),type:'ns',dir:'w'});
+    o.push({p:num(n),pl:'数字で答える',a:[String(n)],show:String(n),type:'num',dir:'r',say:1});
+  }return o;},
+  ref(){
+    return tbl(['数','語'],[20,30,40,50,60,70,80,90,100].map(n=>[String(n),num(n)]))+
+    '<ul><li>21〜99 は <b>一の位 + und + 十の位</b>。順序が日本語と逆(21 = einundzwanzig、「1 と 20」)</li>'+
+    '<li>一の位の 1 は <b>ein</b>(einundzwanzig)</li>'+
+    '<li>30 は <b>dreißig</b>(ß)、60 は <b>sechzig</b>(s が落ちる)、70 は <b>siebzig</b>(en が落ちる)</li>'+
+    '<li>例: 47 = siebenundvierzig / 68 = achtundsechzig / 99 = neunundneunzig</li></ul>';
+  }
+},
+{
+  id:'num3',title:'数字 100 以上・年号',sub:'hundert・tausend の位と、年の読み方(1100〜1999 は hundert 読み)',
+  gen(){
+    const o=[];
+    const ns=[100,101,110,111,120,200,250,300,365,400,500,666,700,800,900,999,1000,1001,1500,2000,2500,5000,10000,100000];
+    while(ns.length<44) ns.push(rnd(101,999));
+    for(const n of ns.slice(0,44)){
+      o.push({p:String(n),pl:'ドイツ語で書く',a:numAll(n),show:numAll(n).join(' / '),type:'ns',dir:'w'});
+    }
+    for(const n of [100,200,321,999,1000,2000,10000]){
+      o.push({p:num(n),pl:'数字で答える',a:[String(n)],show:String(n),type:'num',dir:'r',say:1});
+    }
+    o.push({p:'1 000 000',pl:'ドイツ語で書く(名詞)',a:['eine Million'],show:'eine Million',type:'de',dir:'w'});
+    o.push({p:'eine Million',pl:'数字で答える',a:['1000000'],show:'1000000',type:'num',dir:'r',say:1});
+    for(const y of [1066,1517,1789,1871,1914,1945,1989,1990,1999,2000,2011,2020,2026]){
+      o.push({p:y+'年',pl:'年号をドイツ語で書く',a:yearAll(y),show:yearAll(y).join(' / '),type:'ns',dir:'w'});
+    }
+    return o;
+  },
+  ref(){
+    return tbl(['数','語'],[[ '100','hundert / einhundert'],['101','hunderteins'],['200','zweihundert'],['365','dreihundertfünfundsechzig'],['1000','tausend / eintausend'],['2500','zweitausendfünfhundert'],['10000','zehntausend'],['100000','hunderttausend'],['1000000','eine Million(名詞・大文字)']])+
+    '<ul><li>百の位と十の位の間に <b>und は入れない</b>(123 = hundertdreiundzwanzig)</li>'+
+    '<li>1 万・10 万は <b>zehntausend / hunderttausend</b>(万の単位はなく、千の何倍かで言う)</li></ul>'+
+    '<h3>年号</h3>'+tbl(['年','語'],[['1990','neunzehnhundertneunzig'],['1871','achtzehnhunderteinundsiebzig'],['2000','zweitausend'],['2026','zweitausendsechsundzwanzig']])+
+    '<ul><li><b>1100〜1999 年は「◯◯ hundert」読み</b>(19 hundert 90)</li><li><b>2000 年以降は通常の数字の読み</b>(zweitausend…)</li><li>「〜年に」は前置詞なしの <b>1990</b> か <b>im Jahr(e) 1990</b></li></ul>';
+  }
+},
+{
+  id:'ord',title:'序数・日付',sub:'1.〜31. の序数と、日付「am 3. Oktober」の 3 格語尾',
+  gen(){
+    const o=[];
+    for(let n=1;n<=31;n++) o.push({p:n+'.',pl:'序数(der ○○)を書く',a:ordAll(n),show:ordAll(n)[0],type:'ns',dir:'w'});
+    for(const n of [100,1000]){ const w=ordAll(n);w.push(n===100?'hundertste':'tausendste'); o.push({p:n+'.',pl:'序数(der ○○)を書く',a:w,show:w[0],type:'ns',dir:'w'});}
+    for(let i=0;i<24;i++){
+      const d=rnd(1,31),m=rnd(0,11);
+      const a=ordAll(d).map(x=>'am '+x+'n '+MONTHS[m]);
+      o.push({p:MONTHS_JA[m]+d+'日に',pl:'「am ○○ Monat」で書く',a,show:a[0],type:'de',dir:'w'});
+    }
+    return o;
+  },
+  ref(){
+    return '<ul><li>数字 + <b>ピリオド</b> で序数を表す(3. = dritte)</li>'+
+    '<li>〜19 は <b>基数 + te</b>、20 以上は <b>基数 + ste</b></li>'+
+    '<li>不規則: <b>1. erste / 3. dritte / 7. siebte / 8. achte</b></li>'+
+    '<li>序数は形容詞と同じ語尾がつく(der dritte / am dritten)</li></ul>'+
+    tbl(['形','例文'],[['1 格','Heute ist der dritte Oktober.'],['4 格','Den Wievielten haben wir heute? — Den dritten Oktober.'],['3 格(〜に)','Ich habe am dritten Oktober Geburtstag.']])+
+    '<p>「○月○日に」は <b>am + 序数(3 格語尾 -n)+ 月名</b>。例: am ersten Mai / am zwanzigsten Juli</p>';
+  }
+},
+{
+  id:'time',title:'時刻の言い方',sub:'公式(24時間制)と日常(12時間制・halb / Viertel)',
+  gen(){const o=[];for(let i=0;i<20;i++)o.push(timeOfficial());for(let i=0;i<20;i++)o.push(timeInformal());return o;},
+  ref(){
+    return '<h3>公式(24 時間制)</h3><p>時 + <b>Uhr</b> + 分。<b>14:35 = vierzehn Uhr fünfunddreißig</b>(0:00 = null Uhr、1 時 = ein Uhr)</p>'+
+    '<h3>日常(12 時間制)</h3>'+tbl(['時刻','言い方(3 時台)'],[
+      ['3:00','drei Uhr'],['3:05','fünf nach drei'],['3:10','zehn nach drei'],['3:15','Viertel nach drei'],['3:20','zwanzig nach drei / zehn vor halb vier'],
+      ['3:25','fünf vor halb vier'],['3:30','<b>halb vier</b>'],['3:35','fünf nach halb vier'],['3:40','zwanzig vor vier / zehn nach halb vier'],
+      ['3:45','Viertel vor vier'],['3:50','zehn vor vier'],['3:55','fünf vor vier']])+
+    '<ul><li><b>halb は「次の時刻に向かって半分」</b>。halb vier = 3:30(4:30 ではない)</li>'+
+    '<li>nach / vor の後は数字だけ。<b>「1」は eins</b>(fünf nach eins)、ただし Uhr の前は <b>ein Uhr</b></li>'+
+    '<li>問い: <b>Wie spät ist es?</b> / <b>Wie viel Uhr ist es?</b>(今何時)、<b>Um wie viel Uhr …?</b>(何時に)</li>'+
+    '<li>答え: <b>Es ist ...</b>(今 …)、<b>um ... Uhr</b>(… 時に)</li></ul>';
+  }
+},
+{
+  id:'cal',title:'曜日・月・季節・時間帯',sub:'名詞はすべて男性(Nacht だけ女性)。前置詞 am / im も一緒に',
+  gen(){
+    const c=[];
+    c.push(...pairCards(DAYS));
+    c.push(...MONTHS.flatMap((m,i)=>pairCards([[MONTHS_JA[i],m]])));
+    c.push(...pairCards(SEASONS),...pairCards(DAYPARTS),...pairCards(TIMEWORDS));
+    return c;
+  },
+  ref(){
+    return '<h3>曜日(すべて der / 男性)</h3>'+pairRef(DAYS,'日本語','ドイツ語')+
+    '<h3>月(すべて der / 男性)</h3>'+tbl(['月','ドイツ語','月','ドイツ語'],[0,1,2,3,4,5].map(i=>[MONTHS_JA[i],MONTHS[i],MONTHS_JA[i+6],MONTHS[i+6]]))+
+    '<h3>季節</h3>'+pairRef(SEASONS.map(x=>[x[0],'der '+x[1]]),'日本語','ドイツ語')+
+    '<h3>時間帯</h3>'+pairRef(DAYPARTS,'日本語','ドイツ語')+
+    '<h3>副詞・前置詞句</h3>'+pairRef(TIMEWORDS,'日本語','ドイツ語')+
+    '<ul><li>曜日・時間帯 → <b>am</b>(am Montag / am Abend)</li><li>月・季節 → <b>im</b>(im Mai / im Winter)</li><li>時刻 → <b>um</b>(um acht Uhr)</li><li>夜だけ <b>in der Nacht</b></li></ul>';
+  }
+},
+{
+  id:'greet',title:'挨拶・日常表現',sub:'あいさつ・お礼・自己紹介・聞き返しの定型句',
+  gen(){return pairCards(GREET);},
+  ref(){return pairRef(GREET,'日本語','ドイツ語')+'<ul><li>Sie は敬称(初対面・目上)、du は親称(友人・家族)。Wie geht es Ihnen? / Wie geht es dir?</li><li>入力は大文字小文字と文末の記号(. ! ?)を区別しません</li></ul>';}
+},
+{
+  id:'art',title:'冠詞の格変化',sub:'定冠詞・ein・kein / mein・dieser 型(1 格・4 格・3 格・2 格)',
+  gen(){return artCards();},
+  ref(){
+    let h='';
+    for(const [name,g] of Object.entries(ART)){
+      const row=(k,jn)=>g[k]?[jn,g[k][0],g[k][1],g[k][2],g[k][3]]:[jn,'—','—','—','—'];
+      h+='<h3>'+name+'</h3>'+tbl(['','1 格','4 格','3 格','2 格'],[row('m','男性'),row('f','女性'),row('n','中性'),row('p','複数')]);
+    }
+    h+='<ul><li>男性の 4 格だけ <b>-en</b>(den / einen / keinen / diesen)</li>'+
+    '<li><b>女性・複数の 1 格と 4 格は同形</b>、中性も 1 格 = 4 格</li>'+
+    '<li>3 格は m / n が <b>-em</b>、f が <b>-er</b>、複数が <b>-en</b>(名詞にも -n がつく)</li>'+
+    '<li>2 格は m / n が <b>-(e)s</b>、f と複数が <b>-er</b>。mein・dein・sein・ihr・unser・euer・Ihr は kein と同じ変化</li>'+
+    '<li>複数の ein は存在しない(無冠詞)</li></ul>';
+    return h;
+  }
+},
+{
+  id:'noun',title:'名詞の性(der / die / das)',sub:'基本名詞 45 語の冠詞と複数形。性は名詞と一緒に覚える',
+  gen(){
+    const o=[];
+    for(const [art,n,ja,pl] of NOUNS){
+      o.push({p:n+'\n('+ja+')',pl:'定冠詞は? der / die / das',a:[art],show:art+' '+n+' — '+(pl==='(なし)'?'複数形なし':'die '+pl),type:'de',dir:'w'});
+      o.push({p:ja,pl:'冠詞つきで書く(例: das Buch)',a:[art+' '+n],show:art+' '+n,type:'de',dir:'w'});
+      if(pl!=='(なし)') o.push({p:'die '+pl,pl:'単数形は?(冠詞つきで)',a:[art+' '+n],show:art+' '+n,type:'de',dir:'r2'});
+    }
+    return o;
+  },
+  ref(){
+    const g=a=>tbl(['単数','意味','複数'],NOUNS.filter(x=>x[0]===a).map(x=>[a+' '+x[1],esc(x[2]),esc(x[3])]));
+    return '<h3>der(男性)</h3>'+g('der')+'<h3>die(女性)</h3>'+g('die')+'<h3>das(中性)</h3>'+g('das')+
+    '<h3>性の見分け</h3><ul><li><b>die</b>: -ung / -heit / -keit / -schaft / -tion / -ei、-e で終わる語の多く</li>'+
+    '<li><b>das</b>: -chen / -lein(縮小)、-ment / -um、動詞の名詞化(das Essen)</li>'+
+    '<li><b>der</b>: 男性の人、曜日・月・季節、-er(職業)、-ling</li></ul>';
+  }
+},
+{
+  id:'pron',title:'人称代名詞・所有冠詞',sub:'ich・du・er … の 4 格・3 格と、mein・dein … の元の形',
+  gen(){
+    const o=[];
+    for(const [lb,nm,a4,d3,pos] of PERS){
+      o.push({p:lb+'\n4 格',pl:'人称代名詞を書く',a:[a4],show:a4,type:'de',dir:'w'});
+      o.push({p:lb+'\n3 格',pl:'人称代名詞を書く',a:[d3],show:d3,type:'de',dir:'w'});
+      o.push({p:lb+'\n所有冠詞(〜の)',pl:'語幹の形を書く(男性 1 格)',a:[pos],show:pos,type:'de',dir:'w'});
+    }
+    return o;
+  },
+  ref(){
+    return tbl(['','1 格','4 格','3 格','所有冠詞'],PERS.map(x=>[esc(x[0]),x[1],x[2],x[3],x[4]]))+
+    '<ul><li>er / sie / es は指す名詞の性で決まる(男性名詞 → er / ihn / ihm)</li>'+
+    '<li>大文字 <b>Sie / Ihnen / Ihr</b> は敬称(あなた)。文中でも大文字</li>'+
+    '<li><b>euer</b> は語尾がつくと e が落ちる(eure Mutter)。<b>unser</b> も unsre と書くことがある</li>'+
+    '<li>所有冠詞は kein と同じ語尾(mein Vater / meinen Vater / meiner Mutter)</li></ul>';
+  }
+},
+{
+  id:'sein',title:'sein・haben・werden の現在変化',sub:'最重要の 3 動詞。不規則なので丸暗記',
+  gen(){
+    const o=[];
+    for(const v of ['sein','haben','werden']) VERBS[v].forEach((f,i)=>o.push({p:v+'\n'+PRON[i],pl:'現在形を書く',a:[f],show:f,type:'de',dir:'w'}));
+    return o;
+  },
+  ref(){
+    return tbl(['','sein(〜である)','haben(持つ)','werden(〜になる)'],PRON.map((p,i)=>[p,VERBS.sein[i],VERBS.haben[i],VERBS.werden[i]]))+
+    '<ul><li>sein は全く別の形。wir と sie / Sie は <b>sind</b>(3 つ同形)</li>'+
+    '<li>haben は du <b>hast</b> / er <b>hat</b>(b が落ちる)</li>'+
+    '<li>werden は du <b>wirst</b> / er <b>wird</b>(e→i と語尾)</li></ul>';
+  }
+},
+{
+  id:'modal',title:'話法の助動詞・wissen の現在変化',sub:'können・müssen・wollen・dürfen・sollen・mögen・wissen',
+  gen(){
+    const o=[];
+    for(const v of ['wissen','können','müssen','wollen','dürfen','sollen','mögen']) VERBS[v].forEach((f,i)=>{
+      if(i===5) return; // sie(彼ら) は wir と同形なので省く
+      o.push({p:v+'('+VJA[v]+')\n'+PRON[i],pl:'現在形を書く',a:[f],show:f,type:'de',dir:'w'});
+    });
+    return o;
+  },
+  ref(){
+    const vs=['wissen','können','müssen','wollen','dürfen','sollen','mögen'];
+    return tbl(['']  .concat(vs),PRON.map((p,i)=>[p].concat(vs.map(v=>VERBS[v][i]))))+
+    '<ul><li>単数(ich / er)は <b>語尾なし</b>で同形(ich kann / er kann)</li>'+
+    '<li>幹母音が変わるのは単数だけ(können: kann / können、müssen: muss / müssen)</li>'+
+    '<li>sollen だけは幹母音が変わらない(soll / sollst / soll)</li>'+
+    '<li>wissen も単数で変化する(weiß / weißt / weiß)</li></ul>';
+  }
+},
+{
+  id:'wh',title:'疑問詞',sub:'wer・was・wo・wann・warum・wie … の基本と複合形',
+  gen(){return pairCards(WH);},
+  ref(){
+    return pairRef(WH,'日本語','ドイツ語')+
+    '<ul><li>wer の格変化: <b>wer</b>(1 格)/ <b>wen</b>(4 格)/ <b>wem</b>(3 格)/ <b>wessen</b>(2 格)</li>'+
+    '<li>疑問詞は文頭に置き、<b>動詞は 2 番目</b>(Wo wohnen Sie?)</li>'+
+    '<li>wo(場所)/ woher(出所)/ wohin(方向)を区別する</li></ul>';
+  }
+},
+];
+
+/* ================= 状態 ================= */
+const STORE_KEY='de-kiso-drill-v1';
+let store={};
+try{store=JSON.parse(localStorage.getItem(STORE_KEY)||'{}')||{};}catch(e){store={};}
+const saveStore=()=>{try{localStorage.setItem(STORE_KEY,JSON.stringify(store));}catch(e){}};
+const opt={count:20,dir:'both',speak:false};
+let cur=null; // 現在のテーマ
+let S=null;   // セッション
+let lastCards=null;
+
+const show=id=>{['home','deck','quiz','result'].forEach(x=>$('#'+x).classList.toggle('hidden',x!==id));window.scrollTo(0,0);};
+
+/* ================= ホーム ================= */
+function renderHome(){
+  $('#decklist').innerHTML='';
+  DECKS.forEach(d=>{
+    const b=document.createElement('button');b.className='deck';
+    const w=(store[d.id]&&store[d.id].wrong)||[];
+    b.innerHTML='<b>'+esc(d.title)+'</b><span>'+esc(d.sub)+'</span>'+(w.length?'<em>前回のまちがい '+w.length+' 問</em>':'');
+    b.onclick=()=>openDeck(d);
+    $('#decklist').appendChild(b);
+  });
+  show('home');
+}
+
+/* ================= テーマ画面 ================= */
+function chips(rowId,items,key,fmt){
+  const row=$(rowId);
+  row.querySelectorAll('.chip').forEach(x=>x.remove());
+  items.forEach(v=>{
+    const c=document.createElement('button');c.className='chip'+(opt[key]===v?' on':'');c.textContent=fmt?fmt(v):v;
+    c.onclick=()=>{opt[key]=v;chips(rowId,items,key,fmt);};
+    row.appendChild(c);
+  });
+}
+function openDeck(d){
+  cur=d;
+  $('#deckTitle').textContent=d.title;$('#deckSub').textContent=d.sub;
+  const all=d.gen();
+  chips('#rowCount',[10,20,50,0],'count',v=>v?v+' 問':'全部');
+  const dirs=new Set(all.map(c=>c.dir));
+  const hasDirs=dirs.has('w')&&(dirs.has('r'));
+  $('#rowDir').classList.toggle('hidden',!hasDirs);
+  if(!hasDirs) opt.dir='both';
+  else chips('#rowDir',['w','r','both'],'dir',v=>({w:'書く(独語を入力)',r:'読む(意味を答える)',both:'両方'})[v]);
+  $('#autoSpeak').textContent='自動読み上げ:'+(opt.speak?'入':'切');
+  const w=(store[d.id]&&store[d.id].wrong)||[];
+  $('#retryStored').classList.toggle('hidden',!w.length);
+  $('#retryStored').textContent='前回まちがえた問題だけ('+w.length+' 問)';
+  $('#refBody').innerHTML=d.ref();
+  show('deck');
+}
+$('#deckBack').onclick=renderHome;
+$('#autoSpeak').onclick=()=>{opt.speak=!opt.speak;$('#autoSpeak').textContent='自動読み上げ:'+(opt.speak?'入':'切');};
+$('#startBtn').onclick=()=>{
+  let cards=cur.gen();
+  if(opt.dir!=='both') cards=cards.filter(c=>opt.dir==='w'?c.dir!=='r':c.dir==='r');
+  cards=shuffle(cards);
+  if(opt.count) cards=cards.slice(0,opt.count);
+  startSession(cards);
+};
+$('#retryStored').onclick=()=>startSession(shuffle(store[cur.id].wrong));
+
+/* ================= 出題 ================= */
+function startSession(cards){
+  if(!cards.length) return;
+  lastCards=cards;
+  S={cards,i:0,ok:0,wrong:[],phase:'ask'};
+  show('quiz');ask();
+}
+const conv=s=>s.replace(/([aouAOU]):/g,(m,c)=>({a:'ä',o:'ö',u:'ü',A:'Ä',O:'Ö',U:'Ü'})[c]);
+function speak(t){
+  try{
+    if(!window.speechSynthesis) return;
+    const u=new SpeechSynthesisUtterance(t);u.lang='de-DE';u.rate=.9;
+    speechSynthesis.cancel();speechSynthesis.speak(u);
+  }catch(e){}
+}
+const speakText=c=>(c.dir==='r'||c.dir==='r2')?c.p:(c.type==='ja'?null:c.show.split('  (')[0].split(' / ')[0]);
+function ask(){
+  const c=S.cards[S.i];S.phase='ask';
+  $('#qNo').textContent=(S.i+1)+' / '+S.cards.length;
+  $('#qScore').textContent='正解 '+S.ok;
+  $('#qProg').style.width=(S.i/S.cards.length*100)+'%';
+  $('#qLabel').textContent=c.pl;
+  const pr=$('#qPrompt');pr.textContent=c.p;pr.style.whiteSpace='pre-line';
+  pr.classList.toggle('de',c.dir==='r'||c.dir==='r2');
+  $('#fb').classList.add('hidden');$('#selfArea').classList.add('hidden');$('#nextBtn').classList.add('hidden');
+  const typed=c.type!=='ja';
+  $('#typeArea').classList.toggle('hidden',!typed);
+  $('#flipArea').classList.toggle('hidden',typed);
+  const hearBefore=(c.dir==='r'||c.dir==='r2');
+  $('#speakBtn').classList.toggle('hidden',!hearBefore);
+  if(hearBefore&&opt.speak) speak(c.p);
+  $('#checkBtn').classList.remove('hidden');$('#typeArea').querySelector('.keys').classList.remove('hidden');
+  const inp=$('#ans');inp.value='';inp.disabled=false;
+  if(typed) setTimeout(()=>inp.focus(),30);
+}
+function normS(s,c){
+  s=conv(s).normalize('NFC').trim().toLowerCase().replace(/[’`´]/g,"'");
+  if(c.es) s=s.replace(/^es ist /,'');
+  s=s.replace(/[.,!?;]+$/,'').replace(/\s+/g,' ').trim();
+  if(c.type==='ns') s=s.replace(/[\s-]/g,'');
+  if(c.type==='num') s=s.replace(/[\s.,]/g,'');
+  return s;
+}
+function judge(c,raw){
+  const u=normS(raw,c);
+  const alts=c.a.map(x=>normS(x,c));
+  if(alts.includes(u)) return {ok:true};
+  const ss=x=>x.replace(/ß/g,'ss');
+  if(alts.map(ss).includes(ss(u))) return {ok:true,note:'ß の綴りに注意: '+c.show};
+  return {ok:false};
+}
+function finish(ok,c,mine){
+  S.phase='fb';
+  if(ok) S.ok++; else S.wrong.push(c);
+  $('#qScore').textContent='正解 '+S.ok;
+  $('#nextBtn').classList.remove('hidden');
+  $('#nextBtn').textContent=S.i+1>=S.cards.length?'結果を見る (Enter)':'つぎへ (Enter)';
+  const st=speakText(c);
+  $('#speakBtn').classList.toggle('hidden',!st);
+  if(st&&opt.speak) speak(st);
+}
+$('#checkBtn').onclick=()=>{
+  if(S.phase!=='ask') return;
+  const c=S.cards[S.i],raw=$('#ans').value;
+  if(!raw.trim()){ $('#ans').focus(); return; }
+  const r=judge(c,raw);
+  const fb=$('#fb');fb.className='fb '+(r.ok?'ok':'ng');fb.classList.remove('hidden');
+  fb.innerHTML=(r.ok?'<b>正解</b>':'<b>不正解</b>')+'<div class="ans-show">'+esc(c.show)+'</div>'+
+    (r.note?'<div class="mine">'+esc(r.note)+'</div>':'')+(!r.ok?'<div class="mine">あなたの答え: '+esc(conv(raw))+'</div>':'');
+  $('#ans').disabled=true;
+  $('#typeArea').querySelector('.keys').classList.add('hidden');
+  $('#checkBtn').classList.add('hidden');
+  finish(r.ok,c,raw);
+};
+$('#showBtn').onclick=()=>{
+  if(S.phase!=='ask') return;
+  const c=S.cards[S.i];
+  const fb=$('#fb');fb.className='fb';fb.classList.remove('hidden');
+  fb.innerHTML='<div class="ans-show">'+esc(c.show)+'</div>';
+  $('#flipArea').classList.add('hidden');$('#selfArea').classList.remove('hidden');
+  S.phase='self';
+  if(opt.speak&&(c.dir==='r'||c.dir==='r2')) speak(c.p);
+};
+const selfMark=ok=>{
+  if(S.phase!=='self') return;
+  $('#selfArea').classList.add('hidden');
+  finish(ok,S.cards[S.i],'');
+};
+$('#selfOk').onclick=()=>selfMark(true);
+$('#selfNg').onclick=()=>selfMark(false);
+$('#nextBtn').onclick=next;
+$('#speakBtn').onclick=()=>{const c=S.cards[S.i];const t=(c.dir==='r'||c.dir==='r2')?c.p:speakText(c);if(t)speak(t);};
+function next(){
+  if(!S||S.phase!=='fb') return;
+  $('#checkBtn').classList.remove('hidden');
+  $('#typeArea').querySelector('.keys').classList.remove('hidden');
+  S.i++;
+  if(S.i>=S.cards.length) return showResult();
+  ask();
+}
+$('#quitBtn').onclick=()=>openDeck(cur);
+$('#ans').addEventListener('input',e=>{
+  const el=e.target,p=el.selectionStart,before=el.value;
+  const after=conv(before);
+  if(after!==before){el.value=after;const d=before.length-after.length;el.setSelectionRange(p-d,p-d);}
+});
+document.querySelectorAll('.keys button').forEach(b=>{
+  b.addEventListener('pointerdown',e=>e.preventDefault());
+  b.addEventListener('click',()=>{
+    const el=$('#ans');if(el.disabled) return;
+    const s=el.selectionStart,e2=el.selectionEnd;
+    el.value=el.value.slice(0,s)+b.dataset.k+el.value.slice(e2);
+    el.setSelectionRange(s+1,s+1);el.focus();
+  });
+});
+document.addEventListener('keydown',e=>{
+  if($('#quiz').classList.contains('hidden')||!S) return;
+  if(e.key==='Enter'){
+    e.preventDefault();
+    if(S.phase==='ask'){ if(!$('#typeArea').classList.contains('hidden')) $('#checkBtn').click(); else $('#showBtn').click(); }
+    else if(S.phase==='fb') next();
+  }else if(S.phase==='self'){
+    if(e.key==='1') selfMark(true); else if(e.key==='2') selfMark(false);
+  }
+});
+
+/* ================= 結果 ================= */
+function showResult(){
+  const n=S.cards.length;
+  store[cur.id]={wrong:S.wrong,last:{ok:S.ok,n,t:Date.now()}};saveStore();
+  $('#rScore').textContent=S.ok+' / '+n+'('+Math.round(S.ok/n*100)+'%)';
+  $('#rSub').textContent=S.wrong.length?'まちがえた問題は次回「前回まちがえた問題だけ」で復習できます。':'全問正解です。';
+  $('#rWrong').classList.toggle('hidden',!S.wrong.length);
+  $('#rList').innerHTML=S.wrong.length?S.wrong.map(c=>'<div class="wr">'+esc(c.p.replace(/\n/g,' '))+'<br><span class="d">'+esc(c.show)+'</span></div>').join(''):'<div class="wr">なし</div>';
+  show('result');
+}
+$('#rWrong').onclick=()=>startSession(shuffle(S.wrong));
+$('#rAgain').onclick=()=>{
+  let cards=cur.gen();
+  if(opt.dir!=='both') cards=cards.filter(c=>opt.dir==='w'?c.dir!=='r':c.dir==='r');
+  cards=shuffle(cards);if(opt.count)cards=cards.slice(0,opt.count);
+  startSession(cards);
+};
+$('#rHome').onclick=renderHome;
+
+renderHome();
+</script>
+</body>
+</html>
