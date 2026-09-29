@@ -75,7 +75,7 @@ window.__setPortals({
   {
    "id": "german",
    "name": "ドイツ語",
-   "subtitle": "格変化・名詞の性・分離動詞・時刻表現",
+   "subtitle": "基礎暗記 ／ 練習問題3000題(全12章 1959問)",
    "accent": "#b45309",
    "state": "live",
    "repo": "hirano-soura.github.io",
@@ -87,6 +87,10 @@ window.__setPortals({
      "label": "基礎暗記ドリル",
      "path": "index.html",
      "primary": true
+    },
+    {
+     "label": "練習問題3000題",
+     "path": "3000/index.html"
     }
    ]
   },
