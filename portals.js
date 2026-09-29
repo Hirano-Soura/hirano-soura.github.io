@@ -77,7 +77,18 @@ window.__setPortals({
    "name": "ドイツ語",
    "subtitle": "格変化・名詞の性・分離動詞・時刻表現",
    "accent": "#b45309",
-   "state": "planned"
+   "state": "live",
+   "repo": "hirano-soura.github.io",
+   "webBase": "/german-drill/",
+   "localBase": "german-drill/",
+   "schedule": "随時（Knowledge の Note_German から手動で反映）",
+   "links": [
+    {
+     "label": "基礎暗記ドリル",
+     "path": "index.html",
+     "primary": true
+    }
+   ]
   },
   {
    "id": "chinese",
