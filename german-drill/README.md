@@ -39,13 +39,14 @@ grep -rnE '\.\./|/german-drill/' german-drill/ --exclude=README.md
 - localStorage キーは `de3000-drill-v1`(基礎暗記の `de-kiso-drill-v1` とは別。同じオリジンでも記録は混ざらない)
 - 直すときは Knowledge の原本(と章ノート)を直し、ここへ再コピーする
 
-再コピーの例(両リポジトリを同じ親フォルダに clone している場合):
+再コピーは **Knowledge 側の `Code_Python/sync_portal.py`** で行う(パスは端末ごとに違ってよい。ポータルの場所は `--hub` か環境変数 `PORTAL_HUB_DIR` で渡す)。
 
 ```sh
-cp ../Knowledge/Note_Language/Note_German/ドイツ語練習問題3000題/ドイツ語練習問題3000題_演習ドリル.html german-drill/3000/index.html
+python Code_Python/sync_portal.py           # 差分の確認だけ
+python Code_Python/sync_portal.py --apply   # コピー(そのあと、こちらで commit / push して main へ)
 ```
 
-原本と一致しているかの確認: `cmp` で差が出なければ同期済み。
+スクリプトが「同期済み」と出せば一致している。
 
 ## 単独リポジトリへの移行手順
 
