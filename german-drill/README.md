@@ -26,8 +26,26 @@ grep -rnE '\.\./|/german-drill/' german-drill/ --exclude=README.md
 | ファイル | 役割 |
 | --- | --- |
 | `index.html` | ドリル本体。出題データも内蔵した 1 ファイル完結 |
+| `3000/index.html` | 練習問題3000題 演習ドリル。**Knowledge が原本の複製**(下の節) |
 | `status.js` | ハブのカードに出す状態 |
 | `manifest.webmanifest` / `icon-*.png` | ホーム画面に追加したときの名前とアイコン |
+
+## 練習問題3000題(`3000/`)
+
+基礎暗記ドリルは出題データの原本をこのフォルダに持つが、**3000題の原本は Knowledge にある**。ここにあるのは複製で、**手で編集しない**。
+
+- 原本: `Knowledge/Note_Language/Note_German/ドイツ語練習問題3000題/ドイツ語練習問題3000題_演習ドリル.html`
+- 単一ファイル完結で外部参照が無いので、**バイト単位でそのままコピーする**(加工しない)
+- localStorage キーは `de3000-drill-v1`(基礎暗記の `de-kiso-drill-v1` とは別。同じオリジンでも記録は混ざらない)
+- 直すときは Knowledge の原本(と章ノート)を直し、ここへ再コピーする
+
+再コピーの例(両リポジトリを同じ親フォルダに clone している場合):
+
+```sh
+cp ../Knowledge/Note_Language/Note_German/ドイツ語練習問題3000題/ドイツ語練習問題3000題_演習ドリル.html german-drill/3000/index.html
+```
+
+原本と一致しているかの確認: `cmp` で差が出なければ同期済み。
 
 ## 単独リポジトリへの移行手順
 
