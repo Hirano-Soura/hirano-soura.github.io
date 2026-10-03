@@ -78,9 +78,9 @@ window.__setPortals({
    "subtitle": "基礎暗記 ／ 練習問題3000題(全12章 1959問)",
    "accent": "#b45309",
    "state": "live",
-   "repo": "hirano-soura.github.io",
+   "repo": "german-drill",
    "webBase": "/german-drill/",
-   "localBase": "german-drill/",
+   "localBase": "../german-drill/",
    "schedule": "随時（Knowledge の Note_German から手動で反映）",
    "links": [
     {
