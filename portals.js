@@ -81,7 +81,7 @@ window.__setPortals({
    "repo": "german-drill",
    "webBase": "/german-drill/",
    "localBase": "../german-drill/",
-   "schedule": "随時（Knowledge の Note_German から手動で反映）",
+   "schedule": "随時（非公開の原本からビルドして反映）",
    "links": [
     {
      "label": "基礎暗記ドリル",
