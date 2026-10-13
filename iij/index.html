@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IIJ 二次面接 IT知識</title>
+<meta name="theme-color" content="#0f1419">
+<style>
+  :root{
+    --bg:#0f1419; --bg2:#172029; --bg3:#212d38; --line:#33414e;
+    --fg:#e9eef2; --fg2:#a9b6c1; --fg3:#74828e;
+    --ac:#3ba3e0; --acbg:rgba(59,163,224,.15); --acfg:#7cc6f2;
+    --ok:#4cc38a; --ng:#e5604f; --star:#e8b931; --onac:#06131c;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+    font-size:15px;line-height:1.7;
+    padding:14px 16px calc(60px + env(safe-area-inset-bottom));
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+  h1{font-size:19px;margin:4px 0 2px;color:var(--acfg)}
+  .sub{color:var(--fg3);font-size:12px;margin:0 0 14px}
+  h2{font-size:14px;margin:0 0 8px;color:var(--acfg);letter-spacing:.04em}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+  .hidden{display:none !important}
+  button{font-family:inherit;font-size:15px;cursor:pointer;color:var(--fg)}
+  .btn{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:10px 16px;min-height:44px}
+  .btn.primary{background:var(--ac);border-color:var(--ac);color:var(--onac);font-weight:600}
+  .btn.ok{border-color:var(--ok);color:var(--ok)}
+  .btn.ng{border-color:var(--ng);color:var(--ng)}
+  .btn.sm{min-height:34px;padding:5px 10px;font-size:13px}
+  .btn.block{width:100%}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+  .lbl{font-size:12px;color:var(--fg3);min-width:52px}
+  .chip{background:var(--bg3);border:1px solid var(--line);color:var(--fg2);border-radius:999px;padding:6px 13px;font-size:13px;min-height:34px}
+  .chip.on{background:var(--acbg);border-color:var(--ac);color:var(--acfg)}
+  .deck{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+  .deck b{display:block;font-size:15px}
+  .deck span{display:block;font-size:12px;color:var(--fg3)}
+  .bar{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px;display:flex}
+  .bar>i{display:block;height:100%}
+  .bar>i.o{background:var(--ok)} .bar>i.n{background:var(--ng)}
+  .back{background:none;border:none;color:var(--fg3);padding:6px 0;font-size:13px;margin-bottom:6px}
+  .lead{font-size:13px;color:var(--fg2);margin:0 0 10px}
+  .day{border-left:3px solid var(--line);padding:2px 0 2px 10px;margin:8px 0}
+  .day.today{border-left-color:var(--ac)}
+  .day b{font-size:14px}
+  .day ul{margin:4px 0 0;padding-left:18px}
+  .day li{font-size:13px;color:var(--fg2)}
+  .count{font-size:26px;font-weight:700;color:var(--acfg);line-height:1.2}
+  .q{font-size:16px;font-weight:600;margin:0 0 8px}
+  .star{color:var(--star);margin-right:4px}
+  .ans{font-size:15px;margin:8px 0;padding:10px 12px;background:var(--bg3);border-radius:8px}
+  .more{margin:6px 0 0;padding-left:20px}
+  .more li{font-size:14px;color:var(--fg2);margin:3px 0}
+  .deep{font-size:14px;color:var(--fg2);border-left:3px solid var(--star);padding:4px 0 4px 10px;margin:10px 0 4px}
+  .deep b{color:var(--star);font-size:12px;display:block}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;margin-right:6px;border:1px solid var(--line);color:var(--fg3)}
+  .tag.o{border-color:var(--ok);color:var(--ok)} .tag.n{border-color:var(--ng);color:var(--ng)}
+  .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--fg3);margin-bottom:6px}
+  .prog{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-bottom:10px}
+  .prog>i{display:block;height:100%;background:var(--ac);width:0}
+  .item{border-top:1px solid var(--line);padding:12px 0}
+  .item:first-of-type{border-top:none;padding-top:0}
+  .toggle{background:none;border:none;color:var(--acfg);font-size:13px;padding:4px 0}
+  .muted{color:var(--fg3);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ホーム -->
+  <section id="home">
+    <h1 id="title"></h1>
+    <p class="sub">二次面接 <span id="ivdate"></span> ／ 進捗はこの端末のブラウザに保存</p>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin:0">
+        <div><div class="muted">面接まで</div><div class="count" id="countdown"></div></div>
+        <div style="text-align:right"><div class="muted">言えた／やり直し／全体</div><div class="count" id="total"></div></div>
+      </div>
+      <p class="lead" id="lead" style="margin-top:10px"></p>
+      <ul class="more" id="how"></ul>
+    </div>
+
+    <div class="card">
+      <h2>2日の計画</h2>
+      <div id="days"></div>
+    </div>
+
+    <div class="card">
+      <h2>読む（カテゴリ）</h2>
+      <div id="decks"></div>
+    </div>
+
+    <div class="card">
+      <h2>暗記カード</h2>
+      <div class="row"><span class="lbl">範囲</span><div id="scopeChips" class="row" style="margin:0"></div></div>
+      <div class="row"><span class="lbl">絞る</span><div id="filterChips" class="row" style="margin:0"></div></div>
+      <button class="btn primary block" id="startBtn">始める</button>
+      <p class="muted" id="startInfo" style="margin:6px 0 0"></p>
+    </div>
+
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn sm" id="resetBtn">進捗を消す</button>
+    </div>
+  </section>
+
+  <!-- 読む -->
+  <section id="read" class="hidden">
+    <button class="back" data-go="home">← 戻る</button>
+    <h1 id="readTitle"></h1>
+    <p class="lead" id="readLead"></p>
+    <div class="row">
+      <button class="btn sm" id="openAll">すべて開く</button>
+      <button class="btn sm" id="drillThis">このカテゴリを暗記カードで</button>
+    </div>
+    <div class="card" id="readList"></div>
+  </section>
+
+  <!-- 暗記カード -->
+  <section id="drill" class="hidden">
+    <button class="back" data-go="home">← やめる</button>
+    <div class="meta"><span id="dMeta"></span><span id="dScore"></span></div>
+    <div class="prog"><i id="dProg"></i></div>
+    <div class="card">
+      <div class="muted" id="dCat"></div>
+      <p class="q" id="dQ"></p>
+      <button class="btn block" id="revealBtn">答えを見る</button>
+      <div id="dAns" class="hidden"></div>
+    </div>
+    <div class="row hidden" id="judge">
+      <button class="btn ng" id="ngBtn" style="flex:1">言えなかった</button>
+      <button class="btn ok" id="okBtn" style="flex:1">言えた</button>
+    </div>
+  </section>
+
+  <!-- 結果 -->
+  <section id="result" class="hidden">
+    <h1>おつかれさま</h1>
+    <div class="card">
+      <p id="resText"></p>
+      <ul class="more" id="resNg"></ul>
+    </div>
+    <div class="row">
+      <button class="btn" data-go="home">ホームへ</button>
+      <button class="btn primary" id="retryNg">言えなかったものだけもう一度</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// データファイルは window.__addIIJ({...}) を呼ぶ。kind で受け取り方を分ける（LC-2）
+var PLAN = null, CATS = [];
+window.__addIIJ = function(o){
+  if (o.kind === "plan") PLAN = o;
+  else if (o.kind === "category") CATS.push(o);
+};
+</script>
+<script src="データ/plan.js"></script>
+<script src="データ/net.js"></script>
+<script src="データ/ops.js"></script>
+<script src="データ/srv.js"></script>
+<script src="データ/sec.js"></script>
+<script src="データ/iij.js"></script>
+<script src="データ/ds.js"></script>
+<script src="データ/talk.js"></script>
+<script>
+(function(){
+  var KEY = "iij-interview-v1";
+  var OK = 2, NG = 1;
+  CATS.sort(function(a,b){ return a.order - b.order; });
+
+  // ---- 保存（file:// やプライベートモードで失敗しても動くように） ----
+  var state = { marks:{}, scope:"all", filter:"all" };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) { var s = JSON.parse(raw); for (var k in s) state[k] = s[k]; }
+  } catch(e) {}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} }
+
+  function $(id){ return document.getElementById(id); }
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function allCards(){
+    var out = [];
+    CATS.forEach(function(c){ c.cards.forEach(function(x){ out.push({cat:c, card:x}); }); });
+    return out;
+  }
+  function catById(id){ for (var i=0;i<CATS.length;i++) if (CATS[i].id===id) return CATS[i]; return null; }
+  function counts(cards){
+    var o=0,n=0;
+    cards.forEach(function(x){ var m=state.marks[x.id]; if(m===OK)o++; else if(m===NG)n++; });
+    return {ok:o, ng:n, all:cards.length};
+  }
+  function todayStr(){
+    var d=new Date(); function p(v){return (v<10?"0":"")+v;}
+    return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());
+  }
+  function daysUntil(ymd){
+    var t=new Date(todayStr()+"T00:00:00"), d=new Date(ymd+"T00:00:00");
+    return Math.round((d-t)/86400000);
+  }
+
+  // ---- 画面の切り替え ----
+  var VIEWS = ["home","read","drill","result"];
+  function show(v){
+    VIEWS.forEach(function(x){ $(x).classList.toggle("hidden", x!==v); });
+    if (v==="home") renderHome();
+    window.scrollTo(0,0);
+  }
+  document.addEventListener("click", function(e){
+    var g = e.target.getAttribute && e.target.getAttribute("data-go");
+    if (g) show(g);
+  });
+
+  // ---- カード1枚の中身（読む・暗記カードで共用） ----
+  function cardBody(card){
+    var box = el("div");
+    box.appendChild(el("div","ans",card.a));
+    if (card.more && card.more.length){
+      var ul = el("ul","more");
+      card.more.forEach(function(t){ ul.appendChild(el("li",null,t)); });
+      box.appendChild(ul);
+    }
+    if (card.deep){
+      var d = el("div","deep");
+      d.appendChild(el("b",null,"深掘りされたら"));
+      d.appendChild(document.createTextNode(card.deep));
+      box.appendChild(d);
+    }
+    return box;
+  }
+  function qLine(card){
+    var p = el("p","q");
+    if (card.star) p.appendChild(el("span","star","★"));
+    p.appendChild(document.createTextNode(card.q));
+    return p;
+  }
+  function markTag(id){
+    var m = state.marks[id];
+    if (m===OK) return el("span","tag o","言えた");
+    if (m===NG) return el("span","tag n","やり直し");
+    return el("span","tag","未着手");
+  }
+
+  // ---- ホーム ----
+  function renderHome(){
+    $("title").textContent = PLAN.title;
+    $("ivdate").textContent = PLAN.interview;
+    var du = daysUntil(PLAN.interview);
+    $("countdown").textContent = du>0 ? ("あと "+du+" 日") : (du===0 ? "今日" : "終了");
+    var c = counts(allCards().map(function(x){return x.card;}));
+    $("total").textContent = c.ok+" / "+c.ng+" / "+c.all;
+    $("lead").textContent = PLAN.lead;
+    var how = $("how"); how.innerHTML = "";
+    PLAN.how.forEach(function(t){ how.appendChild(el("li",null,t)); });
+
+    var days = $("days"); days.innerHTML = "";
+    var today = todayStr();
+    PLAN.days.forEach(function(d){
+      var box = el("div","day"+(d.date===today?" today":""));
+      box.appendChild(el("b",null,d.date+"　"+d.title+(d.date===today?"（今日）":"")));
+      var ul = el("ul");
+      d.steps.forEach(function(t){ ul.appendChild(el("li",null,t)); });
+      box.appendChild(ul);
+      if (d.cats.length){
+        var r = el("div","row"); r.style.margin="6px 0 0";
+        d.cats.forEach(function(id){
+          var cat = catById(id); if (!cat) return;
+          var b = el("button","chip",cat.title);
+          b.onclick = function(){ openRead(cat); };
+          r.appendChild(b);
+        });
+        box.appendChild(r);
+      }
+      days.appendChild(box);
+    });
+
+    var decks = $("decks"); decks.innerHTML = "";
+    CATS.forEach(function(cat){
+      var cc = counts(cat.cards);
+      var stars = cat.cards.filter(function(x){return x.star;}).length;
+      var b = el("button","deck");
+      b.appendChild(el("b",null,cat.title));
+      b.appendChild(el("span",null,cat.cards.length+" 枚（★ "+stars+"）／ 言えた "+cc.ok+" ・ やり直し "+cc.ng));
+      var bar = el("div","bar");
+      var io = el("i","o"); io.style.width = (100*cc.ok/cc.all)+"%";
+      var inn = el("i","n"); inn.style.width = (100*cc.ng/cc.all)+"%";
+      bar.appendChild(io); bar.appendChild(inn); b.appendChild(bar);
+      b.onclick = function(){ openRead(cat); };
+      decks.appendChild(b);
+    });
+    renderChips();
+  }
+
+  // ---- 暗記カードの範囲と絞り込み ----
+  var FILTERS = [["all","すべて"],["star","★だけ"],["ng","やり直しだけ"],["new","未着手"]];
+  function chip(label, on, fn){
+    var b = el("button","chip"+(on?" on":""),label); b.onclick = fn; return b;
+  }
+  function renderChips(){
+    var sc = $("scopeChips"); sc.innerHTML = "";
+    sc.appendChild(chip("全部", state.scope==="all", function(){ state.scope="all"; save(); renderChips(); }));
+    CATS.forEach(function(cat){
+      sc.appendChild(chip(cat.title, state.scope===cat.id, function(){ state.scope=cat.id; save(); renderChips(); }));
+    });
+    var fc = $("filterChips"); fc.innerHTML = "";
+    FILTERS.forEach(function(f){
+      fc.appendChild(chip(f[1], state.filter===f[0], function(){ state.filter=f[0]; save(); renderChips(); }));
+    });
+    $("startInfo").textContent = "この条件で "+pool().length+" 枚";
+  }
+  function pool(){
+    return allCards().filter(function(x){
+      if (state.scope!=="all" && x.cat.id!==state.scope) return false;
+      var m = state.marks[x.card.id];
+      if (state.filter==="star") return !!x.card.star;
+      if (state.filter==="ng") return m===NG;
+      if (state.filter==="new") return !m;
+      return true;
+    });
+  }
+
+  // ---- 読む ----
+  var curCat = null;
+  function openRead(cat){
+    curCat = cat;
+    $("readTitle").textContent = cat.title;
+    $("readLead").textContent = cat.lead;
+    var list = $("readList"); list.innerHTML = "";
+    cat.cards.forEach(function(card){
+      var it = el("div","item");
+      var head = el("div"); head.appendChild(markTag(card.id));
+      it.appendChild(head);
+      it.appendChild(qLine(card));
+      var body = cardBody(card); body.classList.add("hidden","body");
+      var t = el("button","toggle","答えを見る ▼");
+      t.onclick = function(){
+        var h = body.classList.toggle("hidden");
+        t.textContent = h ? "答えを見る ▼" : "閉じる ▲";
+      };
+      it.appendChild(t);
+      it.appendChild(body);
+      var r = el("div","row"); r.style.margin="8px 0 0";
+      var ng = el("button","btn sm ng","やり直し");
+      var ok = el("button","btn sm ok","言えた");
+      function mark(v){ state.marks[card.id]=v; save(); head.innerHTML=""; head.appendChild(markTag(card.id)); }
+      ng.onclick = function(){ mark(NG); };
+      ok.onclick = function(){ mark(OK); };
+      r.appendChild(ng); r.appendChild(ok);
+      it.appendChild(r);
+      list.appendChild(it);
+    });
+    show("read");
+  }
+  $("openAll").onclick = function(){
+    var bodies = $("readList").querySelectorAll(".item .body");
+    var toggles = $("readList").querySelectorAll(".toggle");
+    for (var i=0;i<bodies.length;i++) bodies[i].classList.remove("hidden");
+    for (var j=0;j<toggles.length;j++) toggles[j].textContent = "閉じる ▲";
+  };
+  $("drillThis").onclick = function(){ state.scope = curCat.id; state.filter = "all"; save(); startDrill(pool()); };
+
+  // ---- 暗記カード ----
+  var deck = [], pos = 0, score = {ok:0, ng:[]};
+  function shuffle(a){ for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function startDrill(list){
+    if (!list.length){ alert("この条件のカードはありません"); return; }
+    deck = shuffle(list.slice()); pos = 0; score = {ok:0, ng:[]};
+    show("drill"); renderDrill();
+  }
+  function renderDrill(){
+    var x = deck[pos];
+    $("dMeta").textContent = (pos+1)+" / "+deck.length;
+    $("dScore").textContent = "言えた "+score.ok+" ・ 言えなかった "+score.ng.length;
+    $("dProg").style.width = (100*pos/deck.length)+"%";
+    $("dCat").textContent = x.cat.title;
+    var q = $("dQ"); q.innerHTML = "";
+    if (x.card.star) q.appendChild(el("span","star","★"));
+    q.appendChild(document.createTextNode(x.card.q));
+    var a = $("dAns"); a.innerHTML = ""; a.appendChild(cardBody(x.card)); a.classList.add("hidden");
+    $("revealBtn").classList.remove("hidden");
+    $("judge").classList.add("hidden");
+  }
+  $("revealBtn").onclick = function(){
+    $("dAns").classList.remove("hidden");
+    $("revealBtn").classList.add("hidden");
+    $("judge").classList.remove("hidden");
+  };
+  function judge(v){
+    var x = deck[pos];
+    state.marks[x.card.id] = v; save();
+    if (v===OK) score.ok++; else score.ng.push(x);
+    pos++;
+    if (pos < deck.length) { renderDrill(); window.scrollTo(0,0); }
+    else finish();
+  }
+  $("okBtn").onclick = function(){ judge(OK); };
+  $("ngBtn").onclick = function(){ judge(NG); };
+  function finish(){
+    $("resText").textContent = deck.length+" 枚中、言えた "+score.ok+" 枚 ・ 言えなかった "+score.ng.length+" 枚";
+    var ul = $("resNg"); ul.innerHTML = "";
+    score.ng.forEach(function(x){ ul.appendChild(el("li",null,x.card.q)); });
+    $("retryNg").classList.toggle("hidden", !score.ng.length);
+    show("result");
+  }
+  $("retryNg").onclick = function(){ startDrill(score.ng); };
+  $("startBtn").onclick = function(){ startDrill(pool()); };
+  $("resetBtn").onclick = function(){
+    if (!confirm("言えた・やり直しの記録をすべて消します。よろしいですか")) return;
+    state.marks = {}; save(); renderHome();
+  };
+
+  show("home");
+})();
+</script>
+</body>
+</html>
