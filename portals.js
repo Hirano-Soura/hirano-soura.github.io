@@ -5,72 +5,53 @@ window.__setPortals({
  "portals": [
   {
    "id": "toeic",
-   "name": "TOEIC",
-   "subtitle": "L&R  550 → 750",
+   "name": "英語",
+   "subtitle": "授業の単語帳 ／ TOEIC L&R 550 → 750",
    "accent": "#2563eb",
    "state": "live",
    "repo": "toeic-drill",
    "webBase": "/toeic-drill/",
    "localBase": "../TOEIC/デイリー演習/",
-   "schedule": "単語=毎日21時 ／ 本編=火木土21時",
    "links": [
+    {
+     "label": "単語帳",
+     "url": "https://hirano-soura.github.io/tango-drill/",
+     "primary": true
+    },
     {
      "label": "単語ドリル",
      "path": "単語ドリル.html",
-     "primary": true
+     "hidden": true
     },
     {
      "label": "本編ドリル",
-     "path": "演習ビューア.html"
+     "path": "演習ビューア.html",
+     "hidden": true
     },
     {
      "label": "アーカイブ",
-     "path": "デイリー演習.html"
+     "path": "デイリー演習.html",
+     "hidden": true
     }
    ]
   },
   {
-   "id": "toukei",
-   "name": "統計検定",
-   "subtitle": "2級→準1級 ／ 全50トピック 10/19 完了予定",
-   "accent": "#0d9488",
+   "id": "itknow",
+   "name": "IT知識",
+   "subtitle": "IT・インターネット ／ データサイエンス ／ 統計",
+   "accent": "#0369a1",
    "state": "live",
-   "repo": "toukei-drill",
-   "webBase": "/toukei-drill/",
-   "localBase": "../統計検定/ポータル/",
-   "schedule": "月・火・水・金（前夜21時に翌日分を生成）",
+   "localBase": "../it-drill/",
+   "schedule": "随時（IT知識/ を直して publish_it.sh で反映）",
    "links": [
     {
      "label": "開く",
      "path": "index.html",
      "primary": true
     }
-   ]
-  },
-  {
-   "id": "reading",
-   "name": "読書メモ",
-   "subtitle": "private リポジトリ ／ 端末間で双方向同期",
-   "accent": "#7c3aed",
-   "state": "local",
-   "repo": "reading-notes",
-   "localBase": "../読書メモ/ビューア/",
-   "schedule": "随時（会話から記録 → sync_reading.sh）",
-   "note": "GitHub Pages を使わない方針のため、閲覧はローカルのみです。",
-   "links": [
-    {
-     "label": "開く",
-     "path": "index.html",
-     "primary": true
-    }
-   ]
-  },
-  {
-   "id": "english",
-   "name": "英語学び直し",
-   "subtitle": "TOEIC資産の再利用・テンプレ確立役",
-   "accent": "#dc2626",
-   "state": "planned"
+   ],
+   "repo": "it-drill",
+   "webBase": "/it-drill/"
   },
   {
    "id": "german",
@@ -91,6 +72,39 @@ window.__setPortals({
     {
      "label": "練習問題3000題",
      "path": "3000/index.html"
+    }
+   ]
+  },
+  {
+   "id": "toukei",
+   "name": "統計検定",
+   "subtitle": "2級→準1級 ／ 学習が進んでいないため停止（2026-10-19）",
+   "accent": "#0d9488",
+   "state": "paused",
+   "repo": "toukei-drill",
+   "webBase": "/toukei-drill/",
+   "localBase": "../統計検定/ポータル/",
+   "links": [
+    {
+     "label": "開く",
+     "path": "index.html",
+     "primary": true
+    }
+   ]
+  },
+  {
+   "id": "reading",
+   "name": "読書メモ",
+   "subtitle": "このポータルの仕様では使いにくいため停止（2026-10-19）",
+   "accent": "#7c3aed",
+   "state": "paused",
+   "repo": "reading-notes",
+   "localBase": "../読書メモ/ビューア/",
+   "links": [
+    {
+     "label": "開く",
+     "path": "index.html",
+     "primary": true
     }
    ]
   },

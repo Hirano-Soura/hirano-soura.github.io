@@ -41,6 +41,11 @@
   .links a:active{transform:scale(.98)}
   .foot{color:var(--sub);font-size:12px;margin-top:10px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .note{color:var(--sub);font-size:12.5px;margin:6px 0 0}
+  .card.paused{opacity:.72}
+  .badge.paused{background:#f1f5f9;color:var(--sub)}
+  .stash{margin-top:8px;font-size:12.5px;color:var(--sub)}
+  .stash summary{cursor:pointer}
+  .stash .links{margin-top:6px}
   .planned{margin-top:26px}
   .planned h2{font-size:13px;color:var(--sub);font-weight:600;margin:0 0 8px}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -56,6 +61,10 @@
 </header>
 <main>
   <div class="grid" id="grid"></div>
+  <div class="planned" id="pausedbox" style="display:none">
+    <h2>停止中</h2>
+    <div class="grid" id="pausedgrid"></div>
+  </div>
   <div class="planned" id="plannedbox" style="display:none">
     <h2>準備中</h2>
     <div class="chips" id="chips"></div>
@@ -105,12 +114,20 @@ function baseOf(p) { return (IS_LOCAL ? p.localBase : p.webBase) || ''; }
 function linkable(p) {
   if (p.state === 'planned') return false;
   if (p.state === 'local') return IS_LOCAL && !!p.localBase;
-  return !!baseOf(p);
+  return !!baseOf(p);   // live と paused（停止中もリンクは残す。基準パスが無ければ出さない）
+}
+
+/** 一覧のどの段に並べるか。稼働中（live・local）→ 停止中（paused）→ 準備中（planned）の順に描きます。 */
+function groupOf(p) {
+  if (p.state === 'paused') return 'paused';
+  if (p.state === 'planned') return 'planned';
+  return 'active';
 }
 
 function stateBadge(p) {
   if (p.state === 'live') return '<span class="badge live">稼働中</span>';
   if (p.state === 'local') return '<span class="badge local">ローカル専用</span>';
+  if (p.state === 'paused') return '<span class="badge paused">停止中</span>';
   return '<span class="badge">準備中</span>';
 }
 
@@ -193,7 +210,7 @@ function progressBar(st, accent) {
 function cardHtml(p) {
   var st = viewOf(window.__STATUS[p.id]);
   var accent = p.accent || '#6b7280';
-  var h = '<div class="card" style="border-left-color:' + esc(accent) + '">';
+  var h = '<div class="card' + (p.state === 'paused' ? ' paused' : '') + '" style="border-left-color:' + esc(accent) + '">';
   h += '<div class="chead"><span class="cname">' + esc(p.name) + '</span>' + stateBadge(p) + '</div>';
   if (p.subtitle) h += '<p class="csub">' + esc(p.subtitle) + '</p>';
 
@@ -213,12 +230,18 @@ function cardHtml(p) {
 
   if (linkable(p) && p.links && p.links.length) {
     var b = baseOf(p);
-    h += '<div class="links">';
-    p.links.forEach(function (ln) {
+    // url は外部の絶対 URL（基準パスを付けない）。hidden は「退避」の折りたたみの中にだけ出します
+    var a = function (ln) {
       var style = ln.primary ? ' class="primary" style="background:' + esc(accent) + '"' : '';
-      h += '<a href="' + esc(b + ln.path) + '"' + style + '>' + esc(ln.label) + '</a>';
-    });
-    h += '</div>';
+      return '<a href="' + esc(ln.url || (b + ln.path)) + '"' + style + '>' + esc(ln.label) + '</a>';
+    };
+    var shown = p.links.filter(function (ln) { return !ln.hidden; });
+    var stash = p.links.filter(function (ln) { return ln.hidden; });
+    if (shown.length) h += '<div class="links">' + shown.map(a).join('') + '</div>';
+    if (stash.length) {
+      h += '<details class="stash"><summary>退避（' + stash.length + '）</summary>'
+        + '<div class="links">' + stash.map(a).join('') + '</div></details>';
+    }
   }
 
   var left = p.schedule ? '生成: ' + esc(p.schedule) : '';
@@ -249,11 +272,16 @@ function render() {
   if (cfg.title) { document.title = cfg.title; document.getElementById('ttl').textContent = cfg.title; }
   document.getElementById('date').textContent = dateLabel();
 
-  var actives = cfg.portals.filter(function (p) { return p.state !== 'planned'; });
-  var planned = cfg.portals.filter(function (p) { return p.state === 'planned'; });
+  var actives = cfg.portals.filter(function (p) { return groupOf(p) === 'active'; });
+  var paused = cfg.portals.filter(function (p) { return groupOf(p) === 'paused'; });
+  var planned = cfg.portals.filter(function (p) { return groupOf(p) === 'planned'; });
 
   document.getElementById('todayline').textContent = todayLine(actives);
   document.getElementById('grid').innerHTML = actives.map(cardHtml).join('');
+  if (paused.length) {
+    document.getElementById('pausedbox').style.display = '';
+    document.getElementById('pausedgrid').innerHTML = paused.map(cardHtml).join('');
+  }
 
   if (planned.length) {
     document.getElementById('plannedbox').style.display = '';
