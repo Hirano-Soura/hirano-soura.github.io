@@ -54,6 +54,24 @@ window.__setPortals({
    "webBase": "/it-drill/"
   },
   {
+   "id": "econ",
+   "name": "経済学",
+   "subtitle": "ミクロ ／ マクロ ／ 貨幣と金融 ／ 国際 ／ ゲーム理論 ／ 砂と潮",
+   "accent": "#15803d",
+   "state": "live",
+   "localBase": "../econ-drill/",
+   "schedule": "随時（経済学/ を直して publish_econ.sh で反映）",
+   "links": [
+    {
+     "label": "開く",
+     "path": "index.html",
+     "primary": true
+    }
+   ],
+   "repo": "econ-drill",
+   "webBase": "/econ-drill/"
+  },
+  {
    "id": "german",
    "name": "ドイツ語",
    "subtitle": "基礎暗記 ／ 練習問題3000題(全12章 1959問)",
