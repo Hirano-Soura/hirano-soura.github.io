@@ -94,6 +94,24 @@ window.__setPortals({
    ]
   },
   {
+   "id": "music",
+   "name": "音楽",
+   "subtitle": "楽譜・読譜 ／ 単音・調号・音程・メロディ・コード",
+   "accent": "#9333ea",
+   "state": "live",
+   "localBase": "../music-drill/",
+   "schedule": "随時（音楽/ を直して publish_music.sh で反映）",
+   "links": [
+    {
+     "label": "開く",
+     "path": "index.html",
+     "primary": true
+    }
+   ],
+   "repo": "music-drill",
+   "webBase": "/music-drill/"
+  },
+  {
    "id": "toukei",
    "name": "統計検定",
    "subtitle": "2級→準1級 ／ 学習が進んでいないため停止（2026-10-19）",
